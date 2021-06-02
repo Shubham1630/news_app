@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:news_app/database/dbProvider.dart';
+import 'package:news_app/model/news_repository.dart';
 
 import 'model/library.dart';
 
@@ -56,24 +57,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState()  {
-
-    // Create a Dog and add it to the dogs table
-
-
-    printDogs();
-
+     var newsRepo = new NewsRepository();
+     newsRepo.fetchMovieList();
 
   }
 }
 
 void printDogs() async {
-  for(int i = 0; i< 10;i++){
-    var fido = Dog(
-      name: 'Fido',
-      age: 35,
-    );
-    await DBProvider.db.createNewsTable(fido);
-  }
+
+    // await DBProvider.db.createNewsTable(fido);
+
 
 
 }

@@ -12,39 +12,39 @@ class DBProvider {
 
   DBProvider._();
 
-    Future<Database> get database async {
-    // If database exists, return database
-    if (_database != null) return _database;
-
-    // If database don't exists, create one
-    _database = await initDB();
-
-    return _database;
-  }
-
-
-  initDB() async {
-    Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, 'news_list.db');
-
-    return await openDatabase(path, version: 1, onOpen: (db) {},
-        onCreate: (Database db, int version) async {
-          await db.execute(
-            'CREATE TABLE News(author TEXT)',
-          );
-        });
-  }
+  //   Future<Database> get database async {
+  //   // If database exists, return database
+  //   if (_database != null) return _database;
+  //
+  //   // If database don't exists, create one
+  //   _database = await initDB();
+  //
+  //   return _database;
+  // }
 
 
-  createNewsTable(Dog dogs) async {
+  // initDB() async {
+  //   Directory documentsDirectory = await getApplicationDocumentsDirectory();
+  //   final path = join(documentsDirectory.path, 'news_list.db');
+  //
+  //   return await openDatabase(path, version: 1, onOpen: (db) {},
+  //       onCreate: (Database db, int version) async {
+  //         await db.execute(
+  //           'CREATE TABLE News(author TEXT)',
+  //         );
+  //       });
+  // }
+
+
+  createNewsTable(News news) async {
     final database = openDatabase(
 
-      join(await getDatabasesPath(), 'doggie_database.db'),
+      join(await getDatabasesPath(), 'news_database.db'),
 
       onCreate: (db, version) {
 
         return db.execute(
-          'CREATE TABLE dogs(name TEXT, age INTEGER)',
+          'CREATE TABLE news(author TEXT, title TEXT, description TEXT, url TEXT, urlToImage TEXT, publishedAt TEXT )',
         );
       },
       version: 1,
@@ -53,59 +53,58 @@ class DBProvider {
     final db = await database;
 
     await db.insert(
-      'dogs',
-      dogs.toMap(),
+      'news',
+      news.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
 
-    final List<Map<String, dynamic>> maps = await db.query('dogs');
+    final List<Map<String, dynamic>> maps = await db.query('news');
     print(maps.toString());
 
   }
 
-  Future<void> insertDog(Dog dog) async {
-
-    final db = await database;
-
-
-    await db.insert(
-      'dogs',
-      dog.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
-  // A method that retrieves all the dogs from the dogs table.
-  Future<List<Dog>> dogs() async {
-    // Get a reference to the database.
-    final db = await database;
-
-    // Query the table for all The Dogs.
-    final List<Map<String, dynamic>> maps = await db.query('dogs');
-
-    // Convert the List<Map<String, dynamic> into a List<Dog>.
-    return List.generate(maps.length, (i) {
-      return Dog(
-        name: maps[i]['name'],
-        age: maps[i]['age'],
-      );
-    });
-  }
-
-
-  Future<void> deleteDog(int id) async {
-    // Get a reference to the database.
-    final db = await database;
-
-    // Remove the Dog from the database.
-    await db.delete(
-      'dogs',
-      // Use a `where` clause to delete a specific dog.
-      where: 'id = ?',
-      // Pass the Dog's id as a whereArg to prevent SQL injection.
-      whereArgs: [id],
-    );
-  }
+  // Future<void> insertDog(News dog) async {
+  //
+  //   final db = await database;
+  //
+  //
+  //   await db.insert(
+  //     'dogs',
+  //     dog.toJson(),
+  //     conflictAlgorithm: ConflictAlgorithm.replace,
+  //   );
+  // }
+  //
+  // // A method that retrieves all the dogs from the dogs table.
+  // Future<List<News>> dogs() async {
+  //   // Get a reference to the database.
+  //   final db = await database;
+  //
+  //   // Query the table for all The Dogs.
+  //   final List<Map<String, dynamic>> maps = await db.query('dogs');
+  //
+  //   // Convert the List<Map<String, dynamic> into a List<Dog>.
+  //   return List.generate(maps.length, (i) {
+  //     return News(
+  //       author: maps[i]['author'],
+  //     );
+  //   });
+  // }
+  //
+  //
+  // Future<void> deleteDog(int id) async {
+  //   // Get a reference to the database.
+  //   final db = await database;
+  //
+  //   // Remove the Dog from the database.
+  //   await db.delete(
+  //     'dogs',
+  //     // Use a `where` clause to delete a specific dog.
+  //     where: 'id = ?',
+  //     // Pass the Dog's id as a whereArg to prevent SQL injection.
+  //     whereArgs: [id],
+  //   );
+  // }
 
 
 }
