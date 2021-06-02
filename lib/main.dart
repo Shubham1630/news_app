@@ -2,8 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:news_app/database/dbProvider.dart';
-import 'package:news_app/model/library.dart';
-import 'package:news_app/model/news_repository.dart';
+
+import 'model/library.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -37,10 +38,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  List<News> news = [];
-
-
-
   @override
   Widget build(BuildContext context) {
 
@@ -51,42 +48,33 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
 
-        child: ListView.builder(
-            itemCount : news.length,
-            itemBuilder: (_,index){
-              return ListTile(
-                title: Text(news[index].title),
-              );
-            } )
+        child: Text("data")
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 
   @override
-  void initState() {
-    var newsRepository = NewsRepository();
+  void initState()  {
 
-    for(int i = 0; i<10; i++){
-      News newsw = new News();
-      newsw.author = "hi";
-      DBProvider.db.createNewsTable(newsw);
-    }
+    // Create a Dog and add it to the dogs table
 
-print(DBProvider.db.getAllNews().toString());
-    newsRepository.fetchMovieList().then((value) {
-      news = value;
-      setState(() {
 
-      });
-    }
+    printDogs();
 
-    );
-    setState(() {
-      print(news.toString());
-      List newsFromDb = [];
-
-    });
 
   }
 }
+
+void printDogs() async {
+  for(int i = 0; i< 10;i++){
+    var fido = Dog(
+      name: 'Fido',
+      age: 35,
+    );
+    await DBProvider.db.createNewsTable(fido);
+  }
+
+
+}
+
