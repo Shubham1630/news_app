@@ -38,6 +38,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  List news = [];
 
   @override
   Widget build(BuildContext context) {
@@ -57,17 +58,28 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState()  {
-     var newsRepo = new NewsRepository();
-     newsRepo.fetchMovieList();
+
+    getDataFromApiDataBase();
+
+  }
+
+  Future<void> getNewsListFromDataBase() async {
+    news =  await DBProvider.db.newsList();
+    print("from database"+ news.toString());
+    setState(() {
+
+    });
+  }
+
+  void getDataFromApiDataBase() async {
+
+    var newsRepo = new NewsRepository();
+
+    await newsRepo.fetchMovieList();
+    getNewsListFromDataBase();
 
   }
 }
 
-void printDogs() async {
 
-    // await DBProvider.db.createNewsTable(fido);
-
-
-
-}
 
