@@ -44,7 +44,7 @@ class DBProvider {
       onCreate: (db, version) {
 
         return db.execute(
-          'CREATE TABLE news(author TEXT, title TEXT, description TEXT, url TEXT, urlToImage TEXT, publishedAt TEXT )',
+          'CREATE TABLE news(author TEXT, title TEXT, description TEXT, url TEXT, urlToImage TEXT, publishedAt TEXT, content TEXT )',
         );
       },
       version: 1,

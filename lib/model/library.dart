@@ -36,10 +36,10 @@ class News {
 
   factory News.fromJson(Map<String, dynamic> json) =>
       News(author:json["author"], title:json["title"], description:json["description"],
-          url:json["url"],urlToImage:json["urlToImage"],publishedAt:json["publishedAt"]);
+          url:json["url"],urlToImage:json["urlToImage"],publishedAt:json["publishedAt"],content:json["content"]);
 
    Map<String, dynamic> toJson() =>
-      {"author": author, "title": title, "description": description, "urlToImage": urlToImage, "publishedAt":publishedAt};
+      {"author": author, "title": title, "description": description, "urlToImage": urlToImage, "publishedAt":publishedAt, "content":content};
 
-  News({this.author, this.title, this.description, this.url,this.urlToImage,this.publishedAt});
+  News({this.author, this.title, this.description, this.url,this.urlToImage,this.publishedAt,this.content});
 }
